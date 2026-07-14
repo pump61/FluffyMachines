@@ -10,15 +10,15 @@ public final class MetalUtils {
 
     public static String getMetalName(String type) {
         return switch (type.toUpperCase(Locale.ROOT)) {
-            case "IRON" -> "铁";
-            case "GOLD" -> "金";
-            case "COPPER" -> "铜";
-            case "TIN" -> "锡";
-            case "SILVER" -> "银";
-            case "LEAD" -> "铅";
-            case "ALUMINUM" -> "铝";
-            case "ZINC" -> "锌";
-            case "MAGNESIUM" -> "镁";
+            case "IRON" -> "Ferro";
+            case "GOLD" -> "Ouro";
+            case "COPPER" -> "Cobre";
+            case "TIN" -> "Estanho";
+            case "SILVER" -> "Prata";
+            case "LEAD" -> "Chumbo";
+            case "ALUMINUM" -> "Alumínio";
+            case "ZINC" -> "Zinco";
+            case "MAGNESIUM" -> "Magnésio";
             default -> StringUtil.humanize(type);
         };
     }

@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.ncbpfluffybear.fluffymachines.items.Barrel;
 import io.ncbpfluffybear.fluffymachines.items.EnderChestExtractionNode;
@@ -64,52 +65,52 @@ public final class FluffyItemSetup {
     // ItemGroups
     private static final NestedItemGroup fluffymachines = new NestedItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "fluffymachines"),
-        new CustomItemStack(Material.SMOKER, "&6蓬松机器")
+        new CustomItemStack(Material.SMOKER, "&6Fluffy Machines")
     );
 
     private static final ItemGroup generators = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "generators"), fluffymachines,
-        new CustomItemStack(Material.BLAST_FURNACE, "&a发电机"), 1
+        new CustomItemStack(Material.BLAST_FURNACE, "&aGeradores"), 1
     );
 
     private static final ItemGroup machines = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "machines"), fluffymachines,
-        new CustomItemStack(Material.SMOKER, "&9机器"), 2
+        new CustomItemStack(Material.SMOKER, "&9Máquinas"), 2
     );
 
     private static final ItemGroup tools = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "tools"), fluffymachines,
-        new CustomItemStack(Material.IRON_PICKAXE, "&b工具"), 3
+        new CustomItemStack(Material.IRON_PICKAXE, "&bFerramentas"), 3
     );
 
     private static final ItemGroup multiblocks = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "multiblocks"), fluffymachines,
-        new CustomItemStack(Material.BRICKS, "&c多方块结构"), 4
+        new CustomItemStack(Material.BRICKS, "&cMultiblocos"), 4
     );
 
     private static final ItemGroup fluffybarrels = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "barrels"), fluffymachines,
-        new CustomItemStack(Material.BARREL, "&6蓬松箱子"), 5
+        new CustomItemStack(Material.BARREL, "&6Barris Fluffy"), 5
     );
 
     private static final ItemGroup portableChargers = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "portable_chargers"), fluffymachines,
-        new CustomItemStack(FluffyItems.CARBONADO_PORTABLE_CHARGER, "&e便携式充电器"), 6
+        new CustomItemStack(FluffyItems.CARBONADO_PORTABLE_CHARGER, "&eCarregadores Portáteis"), 6
     );
 
     private static final ItemGroup wrenches = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "wrenches"), fluffymachines,
-        new CustomItemStack(FluffyItems.CARBONADO_FLUFFY_WRENCH, "&7扳手"), 7
+        new CustomItemStack(FluffyItems.CARBONADO_FLUFFY_WRENCH, "&7Chaves Inglesas"), 7
     );
 
     private static final ItemGroup cargo = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "cargo"), fluffymachines,
-        new CustomItemStack(Material.CHEST, "&3货运"), 8
+        new CustomItemStack(Material.CHEST, "&3Carga"), 8
     );
 
     private static final ItemGroup misc = new SubItemGroup(
         new NamespacedKey(FluffyMachines.getInstance(), "misc"), fluffymachines,
-        new CustomItemStack(Material.HOPPER, "&8杂项"), 9
+        new CustomItemStack(Material.HOPPER, "&8Miscelânea"), 9
     );
 
     private FluffyItemSetup() {
@@ -127,13 +128,20 @@ public final class FluffyItemSetup {
 
         for (Barrel.BarrelType barrelType : Barrel.BarrelType.values()) {
 
+            String barrelTier = barrelType.ordinal() < 2 ? LoreBuilder.TIER_COMMON
+                : barrelType.ordinal() < 4 ? LoreBuilder.TIER_RARE
+                : barrelType == Barrel.BarrelType.BOTTOMLESS ? LoreBuilder.TIER_LEGENDARY
+                : LoreBuilder.TIER_EPIC;
+
             SlimefunItemStack barrelStack = new SlimefunItemStack(barrelType.getKey(),
                 barrelType.getType(),
                 barrelType.getDisplayName(),
                 "",
-                "&7可以储存大量物品",
+                "&7Armazena grandes quantidades de itens",
                 "",
-                "&b容量: &e可储存 " + Barrel.getDisplayCapacity(barrelType) + " 个物品"
+                "&bCapacidade: &e" + Barrel.getDisplayCapacity(barrelType) + " itens",
+                "",
+                barrelTier
             );
 
             new Barrel(fluffybarrels, barrelStack, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
@@ -457,9 +465,9 @@ public final class FluffyItemSetup {
 
         new SmartFactory(machines, FluffyItems.SMART_FACTORY,
             RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
-            SlimefunItems.CARGO_MOTOR, SlimefunItems.ELECTRIC_SMELTERY_2, SlimefunItems.CARGO_MOTOR,
-            SlimefunItems.ENHANCED_AUTO_CRAFTER, SlimefunItems.CARBON_PRESS_3, SlimefunItems.VANILLA_AUTO_CRAFTER,
-            SlimefunItems.CRAFTING_MOTOR, SlimefunItems.ELECTRIC_INGOT_FACTORY_3, SlimefunItems.CRAFTING_MOTOR
+            SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.NUCLEAR_REACTOR, SlimefunItems.BLISTERING_INGOT_3,
+            SlimefunItems.ELECTRIC_INGOT_FACTORY_3, SlimefunItems.ENERGIZED_CAPACITOR, SlimefunItems.CARBON_PRESS_3,
+            SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.ENHANCED_AUTO_CRAFTER, SlimefunItems.BLISTERING_INGOT_3
         }).register(plugin);
     }
 

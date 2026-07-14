@@ -40,7 +40,7 @@ import java.util.stream.IntStream;
 public class Dolly extends SimpleSlimefunItem<ItemUseHandler> {
 
     private static final ItemStack LOCK_ITEM = Utils.buildNonInteractable(
-            Material.DIRT, "&4&l错误", "&c你要搬到哪里?"
+            Material.DIRT, "&4&lErro", "&cPara onde você quer carregar?"
     );
 
     private ItemSetting<Boolean> canPickupLockedChest = new ItemSetting<>(this, "can-pick-locked-chest", true);
@@ -63,7 +63,7 @@ public class Dolly extends SimpleSlimefunItem<ItemUseHandler> {
             Player p = e.getPlayer();
 
             if (timeouts.containsKey(p) && timeouts.get(p) + DELAY > System.currentTimeMillis()) {
-                Utils.send(p, "&c你需要等待一会才能再次使用箱子搬运车!");
+                Utils.send(p, "&cAguarde antes de usar o Carrinho de Baús novamente!");
                 return;
             }
 
@@ -89,7 +89,7 @@ public class Dolly extends SimpleSlimefunItem<ItemUseHandler> {
                     PlayerProfile.get(p, profile -> {
                         PlayerBackpack bp = Slimefun.getDatabaseManager().getProfileDataController().createBackpack(
                                 p,
-                                "&b箱子搬运车",
+                                "&bCarrinho de Baús",
                                 profile.nextBackpackNum(),
                                 54
                         );
@@ -130,7 +130,7 @@ public class Dolly extends SimpleSlimefunItem<ItemUseHandler> {
         // Dolly full/empty status determined by lock item in first slot
         // Make sure the dolly is empty
         if (!isLockItem(backpack.getInventory().getItem(0))) {
-            Utils.send(p, "&c该箱子搬运车已经拿起了一个箱子!");
+            Utils.send(p, "&cEste Carrinho já está carregando um baú!");
             return;
         }
 
@@ -172,7 +172,7 @@ public class Dolly extends SimpleSlimefunItem<ItemUseHandler> {
         }
 
         chest.setType(Material.AIR);
-        Utils.send(p, "&a你拿起了箱子");
+        Utils.send(p, "&aVocê pegou o baú");
     }
 
     private void placeChest(ItemStack dolly, Block chestBlock, Player p) {
@@ -191,13 +191,13 @@ public class Dolly extends SimpleSlimefunItem<ItemUseHandler> {
             final ItemStack[][] bpContents = {backpack.getInventory().getContents()};
 
             if (isLockItem(bpContents[0][0])) {
-                Utils.send(p, "&c你必须拿起一个箱子!");
+                Utils.send(p, "&cVocê precisa pegar um baú primeiro!");
                 return;
             }
 
             boolean singleChest = isLockItem(bpContents[0][27]);
             if (!canChestFit(chestBlock, p, singleChest)) {
-                Utils.send(p, "&c该箱子无法放置于此处!");
+                Utils.send(p, "&cO baú não pode ser colocado aqui!");
                 return;
             }
 
@@ -216,7 +216,7 @@ public class Dolly extends SimpleSlimefunItem<ItemUseHandler> {
                     ((InventoryHolder) chestBlock.getState()).getInventory().setStorageContents(bpContents[0]);
                     Slimefun.getDatabaseManager().getProfileDataController().saveBackpackInventory(backpack, IntStream.range(0, backpack.getSize()).boxed().toArray(Integer[]::new));
                     dolly.setType(Material.MINECART);
-                    Utils.send(p, "&a已放置箱子");
+                    Utils.send(p, "&aBaú colocado");
                 }
             });
         }, false);

@@ -44,7 +44,7 @@ public class FireproofRune extends SimpleSlimefunItem<ItemDropHandler> {
 
     private static final double RANGE = 1.5;
     private static final NamespacedKey FIREPROOF_KEY = new NamespacedKey(FluffyMachines.getInstance(), "fireproof");
-    private static final String FIREPROOF_LORE = ChatColor.RED + "防火";
+    private static final String FIREPROOF_LORE = ChatColor.RED + "À Prova de Fogo";
 
 
     public FireproofRune(ItemGroup category, SlimefunItemStack item, RecipeType type, ItemStack[] recipe) {
@@ -99,13 +99,13 @@ public class FireproofRune extends SimpleSlimefunItem<ItemDropHandler> {
                         setFireproof(itemStack);
                         l.getWorld().dropItemNaturally(l, itemStack);
 
-                        Utils.send(p, "&a你的物品现在是防火的了");
+                        Utils.send(p, "&aSeu item agora é à prova de fogo");
                     } else {
-                        Utils.send(p, "&c你的物品不能防火");
+                        Utils.send(p, "&cSeu item não pode ser tornado à prova de fogo");
                     }
                 }, 10L);
             } else {
-                Utils.send(p, "&c你的物品不能防火");
+                Utils.send(p, "&cSeu item não pode ser tornado à prova de fogo");
             }
         }
     }

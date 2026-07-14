@@ -126,7 +126,7 @@ public class CargoManipulator extends SimpleSlimefunItem<ItemUseHandler> impleme
 
         storedFilters.put(p, new CargoNodeConfig(blockData.getSfId(), nodeData, filterItems)); // Save cargo slots into map
 
-        Utils.send(p, "&a已复制 " + SlimefunItem.getById(blockData.getSfId()).getItemName() + " &a的设置。");
+        Utils.send(p, "&aConfigurações de " + SlimefunItem.getById(blockData.getSfId()).getItemName() + " &acopiadas.");
         createParticle(parent, Color.fromRGB(255, 252, 51)); // Bright Yellow
     }
 
@@ -139,7 +139,7 @@ public class CargoManipulator extends SimpleSlimefunItem<ItemUseHandler> impleme
 
         // No data saved yet
         if (nodeSettings == null) {
-            Utils.send(p, "&c你还没有复制货运节点配置。");
+            Utils.send(p, "&cVocê ainda não copiou nenhuma configuração.");
             return;
         }
 
@@ -148,8 +148,8 @@ public class CargoManipulator extends SimpleSlimefunItem<ItemUseHandler> impleme
 
         SlimefunItemStack savedNodeType = (SlimefunItemStack) SlimefunItem.getById(nodeSettings.id()).getItem();
         if (savedNodeType != nodeType) {
-            Utils.send(p, "&c你当前复制的是 " + savedNodeType.getDisplayName() + " &c的配置，" +
-                "&c无法应用到 " + nodeType.getDisplayName() + "&c！");
+            Utils.send(p, "&cVocê copiou a configuração de " + savedNodeType.getDisplayName() + " &c," +
+                "&cnão pode ser aplicada em " + nodeType.getDisplayName() + "&c!");
             createParticle(child, Color.RED);
             return;
         }
@@ -183,7 +183,7 @@ public class CargoManipulator extends SimpleSlimefunItem<ItemUseHandler> impleme
                 // Check if item not in inventory
                 if (!SlimefunUtils.containsSimilarItem(playerInventory, filterItems[i], true)) {
                     createParticle(child, Color.AQUA);
-                    Utils.send(p, "&c你的背包中没有过滤器物品 " + Utils.getViewableName(filterItems[i]) + "&c，已跳过该设置。");
+                    Utils.send(p, "&cFiltro " + Utils.getViewableName(filterItems[i]) + "&c não encontrado no inventário, pulando.");
                     continue;
                 }
 
@@ -201,7 +201,7 @@ public class CargoManipulator extends SimpleSlimefunItem<ItemUseHandler> impleme
         }
 
         // Force menu update
-        Utils.send(p, "&a已应用 " + savedNodeType.getDisplayName() + " &a的设置。");
+        Utils.send(p, "&aConfigurações de " + savedNodeType.getDisplayName() + " &aaplicadas.");
         createParticle(child, Color.LIME);
 
     }
@@ -232,7 +232,7 @@ public class CargoManipulator extends SimpleSlimefunItem<ItemUseHandler> impleme
 
             clearNodeFilter(node, p);
 
-            Utils.send(p, "&a该货运节点配置已清除。");
+            Utils.send(p, "&aConfiguração do nó de carga limpa.");
             createParticle(node, Color.fromRGB(255, 152, 56)); // Light orange
         }
     }
