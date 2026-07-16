@@ -232,6 +232,17 @@ public class Barrel extends NonHopperableBlock implements DoubleHologramOwner {
     }
 
     protected void buildMenu(BlockMenu menu, Block b) {
+        // The block's persisted data (e.g. "stored") can still be loading asynchronously
+        // right after a chunk load, even though the block itself is already registered.
+        // Reading it too early would be indistinguishable from "never initialized", wrongly
+        // resetting the display/hologram to "Sem itens" even when items are stored.
+        // Defer until the real data has finished loading before deciding anything.
+        var dataContainer = StorageCacheUtils.getDataContainer(b.getLocation());
+        if (dataContainer != null && !dataContainer.isDataLoaded()) {
+            StorageCacheUtils.executeAfterLoad(dataContainer, () -> buildMenu(menu, b), true);
+            return;
+        }
+
         int capacity = getCapacity(b);
 
         // Initialize an empty barrel
