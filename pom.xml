@@ -71,7 +71,12 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <minimizeJar>true</minimizeJar>
+                    <!-- Disabled: minimizeJar's bytecode-reachability analysis doesn't reliably
+                         detect lombok.Lombok (only referenced via @SneakyThrows-generated
+                         bytecode) - it kept the class in one build and silently dropped it in
+                         the next, with identical source, causing the exact NoClassDefFoundError
+                         this pom already had to work around once. Not worth the jar-size savings. -->
+                    <minimizeJar>false</minimizeJar>
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
