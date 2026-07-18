@@ -97,7 +97,12 @@ public class AdvancedAutoDisenchanter extends SlimefunItem implements EnergyNetC
                 });
 
                 // Set selection to none, we can reset this every instance (server boot)
-                setSelectedIndex(b, -2);
+                // The block's data container can still be loading asynchronously at this point,
+                // in which case setSelectedIndex() (which persists via StorageCacheUtils) would throw.
+                var container = StorageCacheUtils.getDataContainer(b.getLocation());
+                if (container != null && container.isDataLoaded()) {
+                    setSelectedIndex(b, -2);
+                }
 
             }
 

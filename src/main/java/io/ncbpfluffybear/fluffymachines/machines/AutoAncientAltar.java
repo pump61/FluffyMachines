@@ -79,6 +79,12 @@ public class AutoAncientAltar extends SlimefunItem implements EnergyNetComponent
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
                 SlimefunBlockData blockData = StorageCacheUtils.getBlock(b.getLocation());
+                // The block's data container can be null (not yet cached) or still loading
+                // asynchronously at this point - skip this instance and let the next menu
+                // open (once loading has finished) populate it correctly.
+                if (blockData == null || !blockData.isDataLoaded()) {
+                    return;
+                }
                 blockData.setData("craftOnce", String.valueOf(false));
 
                 if (blockData.getData("enabled") == null || String.valueOf(false).equals(blockData.getData("enabled"))) {

@@ -88,7 +88,11 @@ public class SuperheatedFurnace extends NonHopperableBlock {
 
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-                if (StorageCacheUtils.getData(b.getLocation(), "stored") == null) {
+                // The block's data container can still be loading asynchronously at this point,
+                // in which case getData()/setData() would throw instead of returning null.
+                var container = StorageCacheUtils.getDataContainer(b.getLocation());
+                boolean dataLoaded = container != null && container.isDataLoaded();
+                if (dataLoaded && StorageCacheUtils.getData(b.getLocation(), "stored") == null) {
 
                     menu.replaceExistingItem(4, new CustomItemStack(Material.GUNPOWDER, "&6Pó disponível: &e0", "&a> &eClique esquerdo&a para retirar 1", "&a> &eClique direito&a para retirar 1 pilha"));
                     menu.replaceExistingItem(7, new CustomItemStack(Material.IRON_INGOT, "&6Lingotes disponíveis: &e0", "&a> &eClique esquerdo&a para retirar 1", "&a> &eClique direito&a para retirar 1 pilha"));
