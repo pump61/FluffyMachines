@@ -72,6 +72,14 @@ public class MiniBarrel extends Barrel {
 
     @Override
     public int getCapacity(Block b) {
+        // The block's data container can still be loading asynchronously at this point
+        // (e.g. right after the menu-open callback fires) - fall back to the default
+        // capacity for this tick instead of letting StorageCacheUtils throw.
+        var container = StorageCacheUtils.getDataContainer(b.getLocation());
+        if (container == null || !container.isDataLoaded()) {
+            return barrelCapacity.getValue();
+        }
+
         String capacity = StorageCacheUtils.getData(b.getLocation(), "max-size");
         if (capacity == null) {
             StorageCacheUtils.setData(b.getLocation(), "max-size", String.valueOf(barrelCapacity.getValue()));
