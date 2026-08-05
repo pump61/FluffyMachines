@@ -161,7 +161,13 @@ public class Events implements Listener {
                                 p.teleport(destination.add(0.5, 1, 0.5));
 
                                 p.playSound(p.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, 0.5F, 0.5F);
-                                p.spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 10);
+                                try {
+                                    p.spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 10);
+                                } catch (IllegalArgumentException particleEx) {
+                                    // This particle now requires extra data on this
+                                    // server version; skip the cosmetic effect instead
+                                    // of failing the whole teleport task.
+                                }
                             }, 1);
                         }, false);
                     } else {
@@ -204,7 +210,13 @@ public class Events implements Listener {
                             Slimefun.runSync(() ->{
                                 p.teleport(destination.add(0.5, 1, 0.5));
                                 p.playSound(p.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, 0.5F, 0.5F);
-                                p.spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 10);
+                                try {
+                                    p.spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 10);
+                                } catch (IllegalArgumentException particleEx) {
+                                    // This particle now requires extra data on this
+                                    // server version; skip the cosmetic effect instead
+                                    // of failing the whole teleport task.
+                                }
                             });
                         }
 
